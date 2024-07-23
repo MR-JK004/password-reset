@@ -52,33 +52,32 @@ function ResetPasswordPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleResetPassword = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    if (!password || !confirmPassword) {
+        toast.error('Both fields are required');
+        return;
+    }
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
+        toast.error('Passwords do not match');
+        return;
     }
-
     setLoading(true);
-
     try {
-      const response = await axios.post(`https://password-reset-backend-x8vm.onrender.com/user/reset-password/${id}/${token}`, {
-        password
-      });
+        const response = await axios.post('https://password-reset-backend-x8vm.onrender.com/user/reset-password',{token,password});
 
-      if (response.status === 200) {
-        toast.success("Password reset successful");
-        navigate('/');
-      } else {
-        toast.error("Password reset failed");
-      }
+        if (response.status === 200) {
+            toast.success('Password reset successfully');
+            navigate('/');
+        } else {
+            toast.error(response.data.message || 'Password reset failed');
+        }
     } catch (error) {
-      toast.error("An error occurred");
-      console.error(error);
-    } finally {
-      setLoading(false);
+        toast.error(error.response.data.message || 'Password reset failed');
     }
-  };
+    finally{
+        setLoading(false);
+    }
+};
 
   return (
     <MDBContainer className="my-5 d-flex justify-content-center">
@@ -115,7 +114,7 @@ function ResetPasswordPage() {
               </motion.div>
 
               <motion.div variants={inputVariant} initial="hidden" animate="visible">
-                <MDBBtn className="mb-4 px-5" style={{marginLeft:'80px'}} color='dark' size='lg' onClick={handleResetPassword} disabled={loading}>
+                <MDBBtn className="mb-4 px-5" style={{marginLeft:'80px'}} color='dark' size='lg' onClick={handleSubmit} disabled={loading}>
                   {loading ? <BeatLoader size={10} color="#ffffff" /> : 'Reset Password'}
                 </MDBBtn>
               </motion.div>
