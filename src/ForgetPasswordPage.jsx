@@ -62,7 +62,6 @@ function ForgetPasswordPage() {
             <MDBCardBody className='d-flex flex-column justify-content-center'>
 
               <div className='d-flex flex-row mt-2 justify-content-center'>
-                <MDBIcon fas icon="cubes fa-3x me-3" style={{ color: '#ff6219' }} />
                 <img className='logo' src="https://thumbs.dreamstime.com/b/reset-password-button-to-redo-security-pc-new-code-securing-computer-d-illustration-reset-password-button-to-redo-security-159173694.jpg" alt="Logo" />
               </div>
 
