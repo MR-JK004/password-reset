@@ -69,9 +69,12 @@ function ForgetPasswordPage() {
                 <img className='logo' src="https://thumbs.dreamstime.com/b/reset-password-button-to-redo-security-pc-new-code-securing-computer-d-illustration-reset-password-button-to-redo-security-159173694.jpg" alt="Logo" />
               </div>
 
-              <motion.div variants={inputVariant} initial="hidden" animate="visible">
-                <h5 className="fw-normal my-4 pb-3 text-center" style={{ letterSpacing: '1px' }}>Forgot Your Password?</h5>
+              <motion.div variants={inputVariant} initial="hidden" animate="visible" style={{ marginTop: '40px' }}>
+                <h5 className="fw-normal my-4 pb-1 text-left" style={{ letterSpacing: '1px', color: '#393f81', lineHeight: '1.5' }}>
+                  Enter Your Registered E-mail address. We will send a password reset link to your mail id. Use it to reset your password.
+                </h5>
               </motion.div>
+              
               <motion.div variants={inputVariant} initial="hidden" animate="visible">
                 <MDBInput wrapperClass='mb-4' label='Email address' id='formControlLg' type='email' size="lg" value={email} onChange={(e) => setEmail(e.target.value)} />
               </motion.div>

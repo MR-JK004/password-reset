@@ -8,12 +8,14 @@ import {
   MDBCardImage,
   MDBRow,
   MDBCol,
-  MDBInput
+  MDBInput,
 } from 'mdb-react-ui-kit';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { BeatLoader } from 'react-spinners';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const inputVariant = {
   hidden: { opacity: 0, y: 20 },
@@ -36,7 +38,7 @@ const PasswordInput = ({ label, value, onChange, showPassword, togglePassword })
       onClick={togglePassword}
       style={{ backgroundColor: 'transparent', border: 'none' }}
     >
-      <MDBIcon icon={showPassword ? 'eye-slash' : 'eye'} />
+      <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
     </MDBBtn>
   </div>
 );
@@ -82,10 +84,8 @@ function ResetPasswordPage() {
     <MDBContainer className="my-5 d-flex justify-content-center">
       <MDBCard style={{ borderRadius: '1rem', maxWidth: '900px', marginTop: '50px' }}>
         <MDBRow className='g-0'>
-
           <MDBCol md='6'>
             <MDBCardBody className='d-flex flex-column justify-content-center'>
-
               <div className='d-flex flex-row mt-2 justify-content-center'>
                 <img className='logo' src="https://thumbs.dreamstime.com/b/reset-password-button-to-redo-security-pc-new-code-securing-computer-d-illustration-reset-password-button-to-redo-security-159173694.jpg" alt="Logo" />
               </div>
@@ -115,18 +115,16 @@ function ResetPasswordPage() {
               </motion.div>
 
               <motion.div variants={inputVariant} initial="hidden" animate="visible">
-                <MDBBtn className="mb-4 px-5" color='dark' size='lg' onClick={handleResetPassword} disabled={loading}>
+                <MDBBtn className="mb-4 px-5" style={{marginLeft:'80px'}} color='dark' size='lg' onClick={handleResetPassword} disabled={loading}>
                   {loading ? <BeatLoader size={10} color="#ffffff" /> : 'Reset Password'}
                 </MDBBtn>
               </motion.div>
-
             </MDBCardBody>
           </MDBCol>
 
           <MDBCol md='6'>
-            <MDBCardImage src='https://img.freepik.com/free-vector/forgot-password-concept-illustration_114360-1095.jpg' alt="reset password form" className='rounded-start w-100 h-100' style={{ objectFit: 'cover' }} />
+            <MDBCardImage src='https://info.lse.ac.uk/staff/divisions/dts/assets/images/graphics/infosec/reset-password.jpg' alt="reset password form" className='rounded-start w-100 h-100' style={{ objectFit: 'contain' }} />
           </MDBCol>
-
         </MDBRow>
       </MDBCard>
     </MDBContainer>

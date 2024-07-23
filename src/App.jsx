@@ -7,6 +7,7 @@ import Register from './Register';
 import CardTransition from './CardTransition';
 import ResetPasswordPage from './ResetPasswordPage';
 
+
 const AnimatedRoutes = () => {
   const location = useLocation();
 
@@ -16,7 +17,7 @@ const AnimatedRoutes = () => {
         <Route path="/" element={<CardTransition><LoginPage /></CardTransition>} />
         <Route path="/register" element={<CardTransition><Register /></CardTransition>} />
         <Route path="/forget-password" element={<CardTransition><ForgetPasswordPage /></CardTransition>} />
-        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+        <Route path="/reset-password/:token" element={<ResetPasswordPage/>} />
       </Routes>
     </AnimatePresence>
   );
