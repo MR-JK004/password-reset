@@ -14,6 +14,7 @@ import {
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
+import { BeatLoader } from 'react-spinners';
 
 const inputVariant = {
   hidden: { opacity: 0, y: 20 },
@@ -48,6 +49,7 @@ function Register() {
   const [name, setName] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -59,6 +61,8 @@ function Register() {
       return;
     }
     e.preventDefault();
+
+    setLoading(true);
 
     const payload = {
       name: name,
@@ -75,6 +79,7 @@ function Register() {
     });
 
     const result = await response.json();
+    setLoading(false);
     if (response.ok) {
       toast.success(result.message);
       setEmail('')
@@ -97,8 +102,6 @@ function Register() {
               </div>
 
               <h5 className="fw-normal my-4 pb-3 text-center" style={{ letterSpacing: '1px' }}>Create your account</h5>
-
-
 
               <motion.div variants={inputVariant} initial="hidden" animate="visible">
                 <MDBInput wrapperClass='mb-4' label='Full Name' id='formControlName' type='text' size="lg" value={name} onChange={(e) => setName(e.target.value)} required />
@@ -126,9 +129,10 @@ function Register() {
                 />
               </motion.div>
 
-
               <motion.div variants={inputVariant} initial="hidden" animate="visible" transition={{ delay: 0.4 }}>
-                <MDBBtn className="mb-4 px-5" color='dark' size='lg' onClick={handleRegister}>Register</MDBBtn>
+                <MDBBtn className="mb-4 px-5" color='dark' size='lg' onClick={handleRegister} disabled={loading}>
+                  {loading ? <BeatLoader size={10} color="#ffffff" /> : 'Register'}
+                </MDBBtn>
               </motion.div>
               <p className="mb-5 pb-lg-2" style={{ color: '#393f81' }}>Already have an account? <Link to={'/'} style={{ color: '#393f81' }}>Login here</Link></p>
 

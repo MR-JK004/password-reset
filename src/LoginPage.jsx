@@ -8,45 +8,46 @@ import {
   MDBRow,
   MDBCol,
   MDBIcon,
-  MDBInput
+  MDBInput,
+  MDBSpinner
 } from 'mdb-react-ui-kit';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { BeatLoader } from 'react-spinners';
 
 const inputVariant = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 1 } }
 };
 
-const PasswordInput = ({ label, value, onChange, showPassword, togglePassword }) => {
-  return (
-    <div className="position-relative">
-      <MDBInput
-        wrapperClass='mb-4'
-        label={label}
-        type={showPassword ? 'text' : 'password'}
-        size='lg'
-        value={value}
-        onChange={onChange}
-      />
-      <MDBBtn
-        className="position-absolute top-50 end-0 translate-middle-y"
-        color='link'
-        onClick={togglePassword}
-        style={{ backgroundColor: 'transparent', border: 'none' }}
-      >
-        <MDBIcon icon={showPassword ? 'eye-slash' : 'eye'} />
-      </MDBBtn>
-    </div>
-  );
-};
+const PasswordInput = ({ label, value, onChange, showPassword, togglePassword }) => (
+  <div className="position-relative">
+    <MDBInput
+      wrapperClass='mb-4'
+      label={label}
+      type={showPassword ? 'text' : 'password'}
+      size='lg'
+      value={value}
+      onChange={onChange}
+    />
+    <MDBBtn
+      className="position-absolute top-50 end-0 translate-middle-y"
+      color='link'
+      onClick={togglePassword}
+      style={{ backgroundColor: 'transparent', border: 'none' }}
+    >
+      <MDBIcon icon={showPassword ? 'eye-slash' : 'eye'} />
+    </MDBBtn>
+  </div>
+);
 
 function LoginPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [showPassword, setShowPassword] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -56,10 +57,12 @@ function LoginPage() {
       return;
     }
 
+    setLoading(true);
+
     try {
       const response = await axios.post('https://password-reset-backend-x8vm.onrender.com/user/login', {
-        email: email,
-        password: password
+        email,
+        password
       });
 
       if (response.status === 200) {
@@ -71,6 +74,8 @@ function LoginPage() {
       }
     } catch (error) {
       toast.error(error.response?.data?.message || 'An error occurred during login');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -103,7 +108,9 @@ function LoginPage() {
               </motion.div>
 
               <motion.div variants={inputVariant} initial="hidden" animate="visible" transition={{ delay: 0.2 }}>
-                <MDBBtn className="mb-4 px-5" color='dark' size='lg' onClick={handleLogin}>Login</MDBBtn>
+                <MDBBtn className="mb-4 px-5" color='dark' size='lg' onClick={handleLogin} disabled={loading}>
+                  {loading ? <BeatLoader size={10} color="#ffffff" /> : 'Login'}
+                </MDBBtn>
               </motion.div>
 
               <Link className="small text-muted" to='/forget-password'>Forgot password?</Link>
